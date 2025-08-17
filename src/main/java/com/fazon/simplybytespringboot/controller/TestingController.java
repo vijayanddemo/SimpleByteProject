@@ -10,7 +10,7 @@ public class TestingController {
 
     @GetMapping
     public String health() {
-    return "Im Healthy version 1.0";
+    return "Im Healthy version 2.0";
     }
 
 }
