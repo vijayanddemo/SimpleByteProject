@@ -10,7 +10,7 @@ public class TestingController {
 
     @GetMapping
     public String health() {
-    return "Im Healthy version 2.0";
+    return "Hello Everyone, you are watching Simply Byte jenkins series. Im Healthy";
     }
 
 }
