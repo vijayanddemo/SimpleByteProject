@@ -1,0 +1,47 @@
+pipeline{
+    agent any
+    tools {
+        maven "maven3.9.9"
+    }
+    parameters{
+        // string(name: 'ENVIRONMENT',defaultValue: '', description:'environemnt')
+        choice(name: 'ENVIRONMENT' , choices: ['testing','prod'], description: 'environemnt')
+    }
+    environment{
+        DOCKER_IMAGE="simplybyte-calculator-jenkins-local"
+        DOCKER_CONTAINER="simplybyte-container-calculator"
+        ENVIRONMENT="prod" 
+    }
+    stages{
+        stage("Git clone"){
+            steps{
+                git url: 'https://github.com/simplybyte1266/simplybyte-springboot.git', branch: 'main'
+            }
+        }
+        stage("mvn test"){
+            when{
+                expression{
+                    params.ENVIRONMENT=="testing"
+                }
+            }
+            steps{
+                sh 'mvn clean install -DskipTests=true'
+            }
+        }
+        stage("docker build"){
+            steps{
+                sh 'docker build -t $DOCKER_IMAGE:$BUILD_NUMBER .'
+            }
+        }
+        stage("docker remove previous container"){
+            steps{
+                sh "docker rm -f $DOCKER_CONTAINER || true"
+            }
+        }
+        stage("docker run container"){
+            steps{
+                sh 'docker run -d -p 8091:8090 --name=$DOCKER_CONTAINER $DOCKER_IMAGE:$BUILD_NUMBER'
+            }
+        }
+    }
+}
