@@ -26,6 +26,9 @@ jobs:
       - name: Java Version
         run: java --version
         
+      - name: Maven Version
+        run: mvn --version        
+        
       # - name: Run Maven tests
       #   run: mvn test
 
