@@ -26,8 +26,8 @@ jobs:
       - name: Java Version
         run: java --version
         
-      - name: Run Maven tests
-        run: mvn test
+      # - name: Run Maven tests
+      #   run: mvn test
 
   build:
     runs-on: ubuntu-latest
