@@ -11,6 +11,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Echo Command
+        run: echo Hello
+
       - name: Java Version
         run: java --version
         
