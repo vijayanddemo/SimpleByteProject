@@ -13,4 +13,9 @@ public class TestingController {
     return "Hello Everyone, Pipeline Working";
     }
 
+    @GetMapping("/age")
+    public String age(@RequestParam int age) {
+    return "Age: " + age; // ❌ no validation
+}
+
 }
