@@ -1,6 +1,6 @@
 package com.fazon.simplybytespringboot.controller;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -8,20 +8,24 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class TestingController {
 
+    // ✅ Normal endpoint
     @GetMapping
     public String health() {
-    return "Hello Everyone, Pipeline Working";
+        return "Hello Everyone, Pipeline Working";
     }
 
+    // ❌ No validation (Bug / Code Smell)
     @GetMapping("/age")
     public String age(@RequestParam int age) {
-    return "Age: " + age; // ❌ no validation
+        return "Age: " + age;
     }
 
-    private static final String DB_PASSWORD = "admin123"; // ❌ hard-coded secret
+    // ❌ Hard-coded secret (CRITICAL Vulnerability)
+    private static final String DB_PASSWORD = "admin123";
 
-    @GetMapping
-    public String health() {
+    // ❌ Sensitive data exposure
+    @GetMapping("/password")
+    public String showPassword() {
         return "Password is " + DB_PASSWORD;
     }
 }
