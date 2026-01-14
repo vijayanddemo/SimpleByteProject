@@ -18,18 +18,10 @@ public class TestingController {
     return "Age: " + age; // ❌ no validation
     }
 
-    @GetMapping("/{id}")
-    public String getUser(@PathVariable String id) throws Exception {
+    private static final String DB_PASSWORD = "admin123"; // ❌ hard-coded secret
 
-        Connection conn = DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/test", "root", "root");
-
-        Statement stmt = conn.createStatement();
-
-        // ❌ SQL Injection
-        String query = "SELECT * FROM users WHERE id = '" + id + "'";
-        ResultSet rs = stmt.executeQuery(query);
-
-        return "Executed query";
+    @GetMapping
+    public String health() {
+        return "Password is " + DB_PASSWORD;
     }
 }
